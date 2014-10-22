@@ -28,7 +28,7 @@ module WebParser
       date_finish_formatted = I18n.l(date_finish, format: :exchange_rate_parser)
       url_with_dates = RATES_DYNAMIC_URL_PATTERN.gsub('{date_start}', date_start_formatted).gsub('{date_finish}', date_finish_formatted)
       # Заполняем массив с аттриутами строк, для последующей записи в базу
-      EXCHANGES.each.with_object({}) do |(exchange_key, exchange_params), result|
+      EXCHANGES.each.with_object(Hashie::Mash.new) do |(exchange_key, exchange_params), result|
         begin
           # Ссылка для получения курсов валют в указанном диапазоне дат
           url = url_with_dates.gsub('{currency_code}', exchange_params[:api_code])
