@@ -29,23 +29,35 @@ module WebParser
       url_with_dates = RATES_DYNAMIC_URL_PATTERN.gsub('{date_start}', date_start_formatted).gsub('{date_finish}', date_finish_formatted)
       # Заполняем массив с аттриутами строк, для последующей записи в базу
       EXCHANGES.each.with_object({}) do |(exchange_key, exchange_params), result|
-        # Ссылка для получения курсов валют в указанном диапазоне дат
-        url = url_with_dates.gsub('{currency_code}', exchange_params[:api_code])
-        # Получаем распарсенный xml
-        xml = Hpricot(open(url, &:read))
-        # Упаковываем наборы аттрибутов, сгруппированные по датам (для удобства наполнения курсами сразу нескольких валют)
-        (xml/:valcurs/:record).each do |item|
-          # Пропускаем если отсутствует значение
-          next if (value = (item/:value).first.try(:innerText).try(:gsub, ',', '.')).blank?
-          date = Date.parse(item[:date])
-          record_attrs = (result[date] ||= {})
-          # Добавляем к аттрибутам дату
-          record_attrs[:date_at] ||= date
-          # Добавляем к аттрибутам значание курса
-          record_attrs[exchange_key] = value
+        begin
+          # Ссылка для получения курсов валют в указанном диапазоне дат
+          url = url_with_dates.gsub('{currency_code}', exchange_params[:api_code])
+          # Получаем распарсенный xml
+          xml = Hpricot(open(url, &:read))
+          # Упаковываем наборы аттрибутов, сгруппированные по датам (для удобства наполнения курсами сразу нескольких валют)
+          (xml/:valcurs/:record).each do |item|
+            # Пропускаем если отсутствует значение
+            next if (value = (item/:value).first.try(:innerText).try(:gsub, ',', '.')).blank?
+            date = Date.parse(item[:date])
+            record_attrs = (result[date] ||= {})
+            # Добавляем к аттрибутам дату
+            record_attrs[:date_at] ||= date
+            # Добавляем к аттрибутам значание курса
+            record_attrs[exchange_key] = value
+          end
+        rescue => e
+          puts "Can't parse #{exchange_key} exchange rate"
+          puts e.message
+          puts e.backtrace
+        ensure
+          result
         end
-        result
       end
+    rescue => e
+      puts 'Parse error'
+      puts e.message
+      puts e.backtrace
+      {}
     end
 
     # Возващает массив из двух дат
