@@ -1,3 +1,6 @@
+require 'hpricot'
+require 'hashie/mash'
+
 module WebParser
   module Cbrf
     RATES_DYNAMIC_URL_PATTERN = 'http://www.cbr.ru/scripts/XML_dynamic.asp?date_req1={date_start}&date_req2={date_finish}&VAL_NM_RQ={currency_code}'
