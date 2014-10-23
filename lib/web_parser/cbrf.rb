@@ -39,7 +39,8 @@ module WebParser
             # Пропускаем если отсутствует значение
             next if (value = (item/:value).first.try(:innerText).try(:gsub, ',', '.')).blank?
             date = Date.parse(item[:date])
-            record_attrs = (result[date] ||= {})
+            result[date] ||= {}
+            record_attrs = result[date]
             # Добавляем к аттрибутам дату
             record_attrs[:date_at] ||= date
             # Добавляем к аттрибутам значание курса
