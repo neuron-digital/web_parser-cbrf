@@ -8,7 +8,7 @@
 1\. Подключить гем в Gemfile
 
 ```ruby
-gem 'web_parser-cbrf', git: 'git@git.nnbs.ru:gem/web_parser-cbrf.git', tag: 'v0.0.1'
+gem 'web_parser-cbrf', git: 'git@github.com:Go-Promo/web_parser-cbrf.git', tag: 'v0.0.1'
 ```
 
 В качестве тега, возможно, потребуется указать более свежую версию. Последняя версия на момент написания данного файла «v0.0.1»
