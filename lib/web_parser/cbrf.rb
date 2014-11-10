@@ -24,8 +24,8 @@ module WebParser
     #
     def exchange_rates(day_count = 7)
       date_start, date_finish = get_date_range_for_days(day_count)
-      date_start_formatted = I18n.l(date_start,  format: :exchange_rate_parser)
-      date_finish_formatted = I18n.l(date_finish, format: :exchange_rate_parser)
+      date_start_formatted = date_start.strftime('%d/%m/%Y')
+      date_finish_formatted = date_finish.strftime('%d/%m/%Y')
       url_with_dates = RATES_DYNAMIC_URL_PATTERN.gsub('{date_start}', date_start_formatted).gsub('{date_finish}', date_finish_formatted)
       # Заполняем массив с аттриутами строк, для последующей записи в базу
       EXCHANGES.each.with_object(Hashie::Mash.new) do |(exchange_key, exchange_params), result|
