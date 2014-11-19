@@ -16,7 +16,7 @@ module WebParser
 
     module_function
 
-    # Обновление курса валют за последние day_count дней
+    # Обновление курса валют за последние day_count дней (включая завтрашний)
     # Данные извлекаются с cbr.ru
     #
     # @param day_count [Integer] param_desc
@@ -67,7 +67,7 @@ module WebParser
     # @return [Array[Date, Date]]
     #
     def get_date_range_for_days(day_count)
-      [Date.today - (day_count.days - 1.day), Date.today]
+      [Date.today - (day_count.days - 2.days), Date.today + 1.day]
     end
   end
 end
