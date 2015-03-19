@@ -33,7 +33,7 @@ WebParser::Cbrf.exchange_rates
 WebParser::Cbrf.exchange_rates(15) # за 15 дней
 ```
 
-Для получения крайних дат (налало периода, конец периода) за указанное количество дней
+Для получения крайних дат (начало периода, конец периода) за указанное количество дней
 
 ```ruby
 WebParser::Cbrf.get_date_range_for_days(5)
