@@ -1,5 +1,8 @@
 require 'hpricot'
 require 'hashie/mash'
+require 'active_support'
+require 'active_support/core_ext'
+require 'open-uri'
 
 module WebParser
   module Cbrf

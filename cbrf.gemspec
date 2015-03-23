@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 3.2.1'
   s.add_dependency 'hashie', '>= 3.3.1'
   s.add_dependency 'hpricot', '>= 0.8.6'
+  s.add_dependency 'activesupport', '>= 4.2.0'
 end
